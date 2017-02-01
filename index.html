@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoicmFtZGFmZmUiLCJhIjoiY2lla3dod24yMDA0cnNtbTRyNmVmMzMxYiJ9.D1RgfZG_8OY-BYcYIygFog';
+var map = new mapboxgl.Map({
+    style: 'mapbox://styles/mapbox/light-v9',
+    center: [106.933345, -6.227143],
+    zoom: 12,
+    pitch: 45,
+    bearing: -17.6,
+    container: 'map'
+});
+
+// the 'building' layer in the mapbox-streets vector source contains building-height
+// data from OpenStreetMap.
+map.on('load', function() {
+    map.addLayer({
+        'id': 'znt',
+        'source': {
+            'type': 'geojson',
+            'data': 'znt10.geojson'
+        },
+        'type':'fill-extrusion',
+        'paint': {
+            'fill-extrusion-color': '#fff',
+            'fill-extrusion-height': {
+                'type': 'identity',
+                'property': 'mean'
+            },
+            'fill-extrusion-base':0,
+            'fill-extrusion-opacity': .9
+        }
+    });
+});
+</script>
+
+</body>
+</html>
